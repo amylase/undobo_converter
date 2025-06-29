@@ -110,10 +110,11 @@ class SDVXMouseController(mouse.Listener):
             while not self._periodic_stop.is_set():
                 try:
                     self.move(None, None)
-                    # Reset the mouse position to center
-                    self.axis_x.set_value(300)
-                    self.axis_y.set_value(300)
-                    self.mouse.position = (300, 300)
+                    if self.enabled:
+                        # Reset the mouse position to center
+                        self.axis_x.set_value(300)
+                        self.axis_y.set_value(300)
+                        self.mouse.position = (300, 300)
                     time.sleep(self.off_delay / 2)
                 except KeyboardInterrupt:
                     # ignore KeyboardInterrupt in the thread
@@ -142,6 +143,7 @@ class SDVXMouseController(mouse.Listener):
 def main():
     import json
     from pathlib import Path
+
     config_path = Path(__file__).parent / 'config.json'
     if config_path.exists():
         with open(config_path, 'r', encoding='utf-8') as f:
