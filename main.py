@@ -143,6 +143,11 @@ class SDVXMouseController(mouse.Listener):
 def main():
     import json
     from pathlib import Path
+    import ctypes
+    import os
+
+    if os.name == 'nt':
+        ctypes.windll.user32.SetProcessDPIAware()
 
     config_path = Path(__file__).parent / 'config.json'
     if config_path.exists():
